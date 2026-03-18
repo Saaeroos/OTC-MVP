@@ -244,11 +244,16 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
             <div className="p-4 bg-zinc-900 rounded-xl text-white space-y-3">
               <div className="flex justify-between items-center text-sm opacity-70">
                 <span>{TEXT.SUMMARY.QUANTITY}</span>
-                <span>{quantity || 0} {TEXT.UNITS.QUANTITY}</span>
+                <span>
+                  {quantity || 0} {TEXT.UNITS.QUANTITY}
+                </span>
               </div>
               <div className="flex justify-between items-center text-sm opacity-70">
                 <span>{TEXT.SUMMARY.UNIT_PRICE}</span>
-                <span>{TEXT.UNITS.CURRENCY}{price || 0}</span>
+                <span>
+                  {TEXT.UNITS.CURRENCY}
+                  {price || 0}
+                </span>
               </div>
               <div className="h-px bg-white/20 my-2" />
               <div className="flex justify-between items-center">

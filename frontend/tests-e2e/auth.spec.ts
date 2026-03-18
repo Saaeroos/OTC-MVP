@@ -13,7 +13,7 @@ test.describe('Authentication Flow', () => {
     // Wait for the select element to be visible and options to load
     const select = page.locator('select#role-select');
     await select.waitFor({ state: 'visible' });
-    
+
     // Select a user by label (more robust than index)
     // We select the trader user
     await select.selectOption({ label: 'John Doe (trader)' });
