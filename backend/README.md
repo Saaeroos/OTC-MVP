@@ -2,7 +2,7 @@
 
 This is the FastAPI backend for the OTC Trade Flow Application, providing core services for trade capture, automatic ID generation, and manager approval.
 
-## 🚀 Quick Start (Local Development)
+## Quick Start (Local Development)
 
 ### **Prerequisites**
 - Python 3.11+
@@ -37,7 +37,7 @@ This is the FastAPI backend for the OTC Trade Flow Application, providing core s
     uvicorn main:app --reload
     ```
 
-## 🐳 Running with Docker
+## Running with Docker
 
 1.  **Start the services**:
     ```bash
@@ -47,7 +47,7 @@ This is the FastAPI backend for the OTC Trade Flow Application, providing core s
     - Interactive Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
     - ReDoc UI: [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
-## 🏗️ Project Structure
+## Project Structure
 
 - `main.py`: Entry point for the FastAPI application.
 - `src/api/`: Contains the FastAPI routers for different resources (auth, trades, divisions).
@@ -55,7 +55,7 @@ This is the FastAPI backend for the OTC Trade Flow Application, providing core s
 - `src/models/`: Data definitions (SQLAlchemy models and Pydantic schemas).
 - `src/db/`: Database configuration and initialization scripts (`init.sql`, `seed.sql`).
 
-## 🛠️ Key Features
+## Key Features
 
 ### **Simulated Authentication**
 For testing purposes, the backend includes a simulated auth system:

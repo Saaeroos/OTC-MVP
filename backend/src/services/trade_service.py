@@ -30,7 +30,7 @@ async def create_trade(db: AsyncSession, trade_in: schemas.TradeCreate, user_id:
     return result.scalar_one()
 
 async def get_trades(db: AsyncSession, skip: int = 0, limit: int = 100):
-    query = select(models.Trade).options(selectinload(models.Trade.division)).offset(skip).limit(limit)
+    query = select(models.Trade).options(selectinload(models.Trade.division)).order_by(models.Trade.created_at.desc()).offset(skip).limit(limit)
     result = await db.execute(query)
     return result.scalars().all()
 

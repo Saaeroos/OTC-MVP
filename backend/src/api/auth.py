@@ -5,7 +5,7 @@ from sqlalchemy import select
 from src.db.database import get_db
 from src.services import auth_service
 from src.models import schemas, models
-from jose import jwt
+from jose import jwt, JWTError
 from src.services.auth_service import SECRET_KEY, ALGORITHM
 from typing import List
 
