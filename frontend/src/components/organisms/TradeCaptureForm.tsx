@@ -204,7 +204,10 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
               </div>
             </div>
             <div>
-              <label htmlFor="delivery_date" className="block text-sm font-medium text-zinc-700 mb-1">
+              <label
+                htmlFor="delivery_date"
+                className="block text-sm font-medium text-zinc-700 mb-1"
+              >
                 {TEXT.LABELS.DELIVERY_DATE}
               </label>
               <div className="relative">

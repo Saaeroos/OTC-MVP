@@ -70,7 +70,9 @@ describe('TradeList Organism', () => {
       approveTrade: vi.fn(),
       isApproving: false,
     } as unknown as ReturnType<typeof useTrades>);
-    vi.mocked(useAuthStore).mockReturnValue({ role: 'trader' } as unknown as ReturnType<typeof useAuthStore>);
+    vi.mocked(useAuthStore).mockReturnValue({ role: 'trader' } as unknown as ReturnType<
+      typeof useAuthStore
+    >);
 
     render(
       <QueryClientProvider client={queryClient}>
