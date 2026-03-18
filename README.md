@@ -2,7 +2,7 @@
 
 A full-stack application  to capture and manage  (OTC) energy trades across multiple divisions.
 
-## 🏗 Architecture
+## Architecture
 
 ### Frontend
 - **Framework**: React 18 with TypeScript for type-safe component development.
@@ -41,7 +41,7 @@ The easiest way to run the entire application (Frontend, Backend, and Database) 
 
 ***
 
-## 💻 Manual Setup (Without Docker)
+## Manual Setup (Without Docker)
 
 If you prefer to run the services locally without Docker, follow these steps.
 
@@ -101,7 +101,7 @@ docker compose up -d db
 
 ***
 
-## 🧪 Testing
+## Testing
 
 The project includes  unit and end-to-end  testing.
 
@@ -122,7 +122,7 @@ Navigate to the `backend` directory and ensure your virtual environment is activ
 
 ***
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend**: React 18, TypeScript, Vite, Tailwind CSS, React Query, Zustand, React Hook Form, Zod.
 - **Backend**: FastAPI, Python 3.12, SQLAlchemy (Async), Pydantic.
