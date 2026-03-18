@@ -28,7 +28,7 @@ const TEXT = {
 
 export const TradeList: React.FC = () => {
   const user = useAuthStore((state) => state.user);
-  const { trades, isLoading, approveTrade, isApproving } = useTrades();
+  const { trades, isLoading, approveTrade, isApproving, approvingId } = useTrades();
 
   if (isLoading) return <div className="p-8 text-center text-zinc-500">{TEXT.LOADING}</div>;
 
@@ -131,7 +131,7 @@ export const TradeList: React.FC = () => {
                   {user?.role === 'manager' && trade.status === 'pending' && (
                     <Button
                       onClick={() => approveTrade(trade.id)}
-                      isLoading={isApproving}
+                      isLoading={isApproving && approvingId === trade.id}
                       size="sm"
                       className="px-4 py-1.5 text-xs font-bold"
                     >
