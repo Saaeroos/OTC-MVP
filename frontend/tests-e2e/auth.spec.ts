@@ -10,12 +10,16 @@ test.describe('Authentication Flow', () => {
   test('should allow selecting a role and log in', async ({ page }) => {
     await page.goto('/auth');
 
-    // Select role (assuming the simulated login dropdown is visible)
-    const select = page.locator('select');
+    // Wait for the select element to be visible and options to load
+    const select = page.locator('select#role-select');
+    await select.waitFor({ state: 'visible' });
+    
+    // Select a user by label (more robust than index)
+    // We select the trader user
     await select.selectOption({ label: 'John Doe (trader)' });
 
     // Should redirect to home
-    await expect(page).toHaveURL('http://localhost:3000/');
+    await expect(page).toHaveURL('http://localhost:5173/');
     await expect(page.getByText(/Trade Console/i)).toBeVisible();
     await expect(page.getByText(/John Doe/i)).toBeVisible();
   });

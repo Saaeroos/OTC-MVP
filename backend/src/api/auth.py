@@ -40,12 +40,12 @@ async def get_simulated_users(db: AsyncSession = Depends(get_db)):
 
 @router.post("/login", response_model=schemas.Token)
 async def login_for_access_token(db: AsyncSession = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()):
-    # Standard OAuth2 login for compatibility (not strictly needed but good for tests)
+    # Standard OAuth2 login for Swagger UI compatibility (password check bypassed for simulated login)
     user = await auth_service.get_user_by_username(db, username=form_data.username)
-    if not user or not auth_service.verify_password(form_data.password, user.password_hash):
+    if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
+            detail="Incorrect username",
             headers={"WWW-Authenticate": "Bearer"},
         )
     

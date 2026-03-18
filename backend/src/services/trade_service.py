@@ -1,5 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, text
+from sqlalchemy.orm import selectinload
 from src.models import models, schemas
 from uuid import UUID
 
@@ -22,16 +23,19 @@ async def create_trade(db: AsyncSession, trade_in: schemas.TradeCreate, user_id:
     
     db.add(new_trade)
     await db.commit()
-    await db.refresh(new_trade)
-    return new_trade
+    # Instead of just refreshing, we re-fetch with relationships to avoid MissingGreenlet error
+    # when Pydantic tries to access the division relationship
+    query = select(models.Trade).where(models.Trade.id == new_trade.id).options(selectinload(models.Trade.division))
+    result = await db.execute(query)
+    return result.scalar_one()
 
 async def get_trades(db: AsyncSession, skip: int = 0, limit: int = 100):
-    query = select(models.Trade).offset(skip).limit(limit)
+    query = select(models.Trade).options(selectinload(models.Trade.division)).offset(skip).limit(limit)
     result = await db.execute(query)
     return result.scalars().all()
 
 async def get_trade(db: AsyncSession, trade_id: UUID):
-    query = select(models.Trade).where(models.Trade.id == trade_id)
+    query = select(models.Trade).options(selectinload(models.Trade.division)).where(models.Trade.id == trade_id)
     result = await db.execute(query)
     return result.scalar_one_or_none()
 
@@ -56,8 +60,11 @@ async def approve_trade(db: AsyncSession, trade_id: UUID, user_id: UUID):
     db.add(approval)
     
     await db.commit()
-    await db.refresh(trade)
-    return trade
+    
+    # Re-fetch to ensure all relationships are loaded for response
+    query = select(models.Trade).where(models.Trade.id == trade.id).options(selectinload(models.Trade.division))
+    result = await db.execute(query)
+    return result.scalar_one()
 
 async def get_divisions(db: AsyncSession):
     query = select(models.Division)
