@@ -5,7 +5,7 @@ import { useTrades } from '../../hooks/queries/useTrades';
 import { useDivisions } from '../../hooks/queries/useDivisions';
 import { tradeSchema, type TradeFormData } from '../../forms/tradeSchema';
 import { TradeCreate } from '../../types';
-import { Euro, Calendar, Package, Users, Info } from 'lucide-react';
+import { Euro, Calendar, Package, Users } from 'lucide-react';
 import { Button } from '../atoms';
 
 interface TradeCaptureFormProps {
