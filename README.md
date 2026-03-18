@@ -2,6 +2,23 @@
 
 A full-stack application  to capture and manage  (OTC) energy trades across multiple divisions.
 
+## 🏗 Architecture
+
+### Frontend
+- **Framework**: React 18 with TypeScript for type-safe component development.
+- **Build Tool**: Vite for fast development server and optimized production builds.
+- **State Management**: Zustand for global client state (auth) and React Query for server state management.
+- **Styling**: Tailwind CSS for utility-first, responsive design.
+- **Forms**: React Hook Form integrated with Zod for robust schema validation.
+- **Testing**: Vitest for unit testing and Playwright for end-to-end testing.
+
+### Backend
+- **Framework**: FastAPI for high-performance, async API development.
+- **Database**: PostgreSQL with SQLAlchemy ORM for efficient data modeling and querying.
+- **Validation**: Pydantic models ensure data integrity and automatic documentation generation.
+- **Authentication**: JWT-based stateless authentication flow.
+- **Infrastructure**: Docker & Docker Compose for consistent containerized deployment.
+
 ## Quick Start (Docker)
 
 The easiest way to run the entire application (Frontend, Backend, and Database) is using Docker Compose.

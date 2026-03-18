@@ -87,5 +87,6 @@ export const useTrades = () => {
     isCreating: createTradeMutation.isPending,
     approveTrade: approveTradeMutation.mutate,
     isApproving: approveTradeMutation.isPending,
+    approvingId: approveTradeMutation.isPending ? approveTradeMutation.variables : null,
   };
 };
