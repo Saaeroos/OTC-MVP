@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuthStore } from '../stores/authStore';
 
 const API_URL = 'http://localhost:8000';
 
@@ -21,8 +22,7 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('auth_token');
-      // Optional: redirect to login or trigger re-auth
+      useAuthStore.getState().logout();
     }
     return Promise.reject(error);
   },

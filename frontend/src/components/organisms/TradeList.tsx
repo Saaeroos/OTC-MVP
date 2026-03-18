@@ -127,16 +127,18 @@ export const TradeList: React.FC = () => {
                     )}
                   </span>
                 </td>
-                <td className="px-6 py-4 text-right">
-                  {user?.role === 'manager' && trade.status === 'pending' && (
+                <td className="px-6 py-4 text-right h-16 w-32">
+                  {user?.role === 'manager' && trade.status === 'pending' ? (
                     <Button
                       onClick={() => approveTrade(trade.id)}
                       isLoading={isApproving && approvingId === trade.id}
                       size="sm"
-                      className="px-4 py-1.5 text-xs font-bold"
+                      className="px-4 py-1.5 text-xs font-bold w-full"
                     >
                       {TEXT.APPROVE_BUTTON}
                     </Button>
+                  ) : (
+                    <div className="w-full h-full" />
                   )}
                 </td>
               </tr>

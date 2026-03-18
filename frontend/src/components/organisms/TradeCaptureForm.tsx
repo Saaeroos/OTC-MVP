@@ -14,6 +14,16 @@ interface TradeCaptureFormProps {
 
 const TEXT = {
   TITLE: 'New Trade Capture',
+  SECTIONS: {
+    COUNTERPARTIES: 'Counterparties',
+    PRODUCT_DETAILS: 'Product & Division',
+    PRICING_DELIVERY: 'Pricing & Delivery',
+    SUMMARY: 'Trade Summary',
+  },
+  UNITS: {
+    CURRENCY: '€',
+    QUANTITY: 'MWh',
+  },
   LABELS: {
     SELLER: 'Seller',
     BUYER: 'Buyer',
@@ -34,7 +44,6 @@ const TEXT = {
     UNIT_PRICE: 'Unit Price',
     TOTAL_PRICE: 'Total Price',
   },
-  INFO: 'Trade ID will be automatically generated upon submission based on the selected division and current date.',
   SUBMIT: 'Capture Trade',
   SUCCESS: 'Trade captured successfully!',
 };
@@ -83,7 +92,7 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
           {/* Counterparties */}
           <div className="space-y-4">
             <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
-              Counterparties
+              {TEXT.SECTIONS.COUNTERPARTIES}
             </h3>
             <div>
               <label htmlFor="seller" className="block text-sm font-medium text-zinc-700 mb-1">
@@ -122,7 +131,7 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
           {/* Product Details */}
           <div className="space-y-4">
             <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
-              Product & Division
+              {TEXT.SECTIONS.PRODUCT_DETAILS}
             </h3>
             <div>
               <label htmlFor="product" className="block text-sm font-medium text-zinc-700 mb-1">
@@ -166,7 +175,7 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
           {/* Pricing & Delivery */}
           <div className="space-y-4">
             <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
-              Pricing & Delivery
+              {TEXT.SECTIONS.PRICING_DELIVERY}
             </h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -177,6 +186,7 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
                   id="quantity"
                   type="number"
                   step="0.01"
+                  min="0"
                   {...register('quantity', { valueAsNumber: true })}
                   className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:outline-none"
                 />
@@ -194,6 +204,7 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
                     id="price"
                     type="number"
                     step="0.01"
+                    min="0"
                     {...register('price', { valueAsNumber: true })}
                     className="w-full pl-9 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:outline-none"
                   />
@@ -228,32 +239,28 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
           {/* Summary */}
           <div className="space-y-4">
             <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
-              Trade Summary
+              {TEXT.SECTIONS.SUMMARY}
             </h3>
             <div className="p-4 bg-zinc-900 rounded-xl text-white space-y-3">
               <div className="flex justify-between items-center text-sm opacity-70">
                 <span>{TEXT.SUMMARY.QUANTITY}</span>
-                <span>{quantity || 0} MWh</span>
+                <span>{quantity || 0} {TEXT.UNITS.QUANTITY}</span>
               </div>
               <div className="flex justify-between items-center text-sm opacity-70">
                 <span>{TEXT.SUMMARY.UNIT_PRICE}</span>
-                <span>€{price || 0}</span>
+                <span>{TEXT.UNITS.CURRENCY}{price || 0}</span>
               </div>
               <div className="h-px bg-white/20 my-2" />
               <div className="flex justify-between items-center">
                 <span className="font-medium">{TEXT.SUMMARY.TOTAL_PRICE}</span>
                 <span className="text-xl font-bold">
-                  €
+                  {TEXT.UNITS.CURRENCY}
                   {totalPrice.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })}
                 </span>
               </div>
-            </div>
-            <div className="flex items-start gap-2 text-[10px] text-zinc-400 italic">
-              <Info className="w-3 h-3 flex-shrink-0" />
-              <p>{TEXT.INFO}</p>
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ const queryClient = new QueryClient({
 const TEXT = {
   APP_TITLE: 'OTC Flow',
   LOGOUT_TITLE: 'Logout',
-  FOOTER: 'OTC Trade Capture MVP • Built with FastAPI & React Query',
+  FOOTER: 'OTC Trade Capture MVP',
 };
 
 function AppLayout() {
