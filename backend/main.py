@@ -55,7 +55,7 @@ async def lifespan(app: FastAPI):
         default_users = [
             User(
                 username='mo_alhayek', 
-                email='mo@example.com', 
+                email='mo_alhayek@example.com', 
                 password_hash='$2b$12$EixZaYVK1fsbw1ZfbX3OXePaGuNoG.U.E/k5U/5L/m2L6G.L.G.L.', 
                 role='trader', 
                 name='Mo Alhayek'
