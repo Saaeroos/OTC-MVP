@@ -11,7 +11,7 @@ export const useTrades = () => {
     queryKey: ['trades'],
     queryFn: tradeService.getTrades,
     staleTime: 1000 * 10, // 10 seconds
-    refetchInterval: user?.role === 'manager' ? 1000 * 10 : false,
+    refetchInterval: 1000 * 10, // 10 seconds
   });
 
   const createTradeMutation = useMutation({
