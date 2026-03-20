@@ -19,6 +19,30 @@ A full-stack application  to capture and manage  (OTC) energy trades across mult
 - **Authentication**: JWT-based stateless authentication flow.
 - **Infrastructure**: Docker & Docker Compose for consistent containerized deployment.
 
+## Project Structure
+
+```text
+otc-flow/
+├── backend/                  # FastAPI Python backend
+│   ├── src/
+│   │   ├── api/              # API endpoints/routers
+│   │   ├── db/               # Database config and init/seed scripts
+│   │   ├── models/           # SQLAlchemy models and Pydantic schemas
+│   │   └── services/         # Business logic
+│   └── tests/                # Pytest test suite
+├── frontend/                 # React frontend
+│   ├── src/
+│   │   ├── api/              # API integration clients
+│   │   ├── components/       # Atomic Design components (atoms, molecules, organisms, layout)
+│   │   ├── forms/            # Zod schemas for form validation
+│   │   ├── hooks/            # Custom React hooks & React Query hooks
+│   │   ├── pages/            # Top-level page components
+│   │   ├── stores/           # Zustand state management
+│   │   └── types/            # TypeScript interfaces/types
+│   └── tests-e2e/            # Playwright E2E tests
+└── docker-compose.yml        # Main Docker compose file
+```
+
 ## Quick Start (Docker)
 
 The easiest way to run the entire application (Frontend, Backend, and Database) is using Docker Compose.

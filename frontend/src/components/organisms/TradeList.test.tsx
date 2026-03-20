@@ -52,7 +52,7 @@ describe('TradeList Organism', () => {
     const mockTrades = [
       {
         id: '1',
-        trade_id: 'TRD-001',
+        trade_id: '19.03.2026-000001.1',
         product: 'Energy',
         seller: 'Seller A',
         buyer: 'Buyer B',

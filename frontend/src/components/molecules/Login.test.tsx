@@ -1,13 +1,13 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { SimulatedLogin } from './SimulatedLogin';
+import { Login } from './Login';
 import { useAuth } from '../../hooks/queries/useAuth';
 
 vi.mock('../../hooks/queries/useAuth', () => ({
   useAuth: vi.fn(),
 }));
 
-describe('SimulatedLogin Molecule', () => {
+describe('Login Molecule', () => {
   it('shows loading state correctly', () => {
     vi.mocked(useAuth).mockReturnValue({
       users: [],
@@ -16,7 +16,7 @@ describe('SimulatedLogin Molecule', () => {
       isLoggingIn: false,
     } as unknown as ReturnType<typeof useAuth>);
 
-    render(<SimulatedLogin />);
+    render(<Login />);
     expect(screen.getByText(/Loading roles.../i)).toBeInTheDocument();
   });
 
@@ -33,7 +33,7 @@ describe('SimulatedLogin Molecule', () => {
       isLoggingIn: false,
     } as unknown as ReturnType<typeof useAuth>);
 
-    render(<SimulatedLogin />);
+    render(<Login />);
 
     expect(screen.getByText('Trader One (trader)')).toBeInTheDocument();
     expect(screen.getByText('Manager One (manager)')).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe('SimulatedLogin Molecule', () => {
       isLoggingIn: false,
     } as unknown as ReturnType<typeof useAuth>);
 
-    render(<SimulatedLogin />);
+    render(<Login />);
 
     const select = screen.getByLabelText(/Switch Simulated Role/i);
     fireEvent.change(select, { target: { value: 'trader1' } });

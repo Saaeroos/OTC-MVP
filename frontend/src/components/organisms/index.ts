@@ -1,2 +1,2 @@
-export * from './TradeCaptureForm';
-export * from './TradeList';
+export { TradeCaptureForm } from './TradeCaptureForm';
+export { TradeList } from './TradeList';

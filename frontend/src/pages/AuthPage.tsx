@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
-import { SimulatedLogin } from '../components/molecules';
+import { Login } from '../components/molecules';
 import { LayoutDashboard } from 'lucide-react';
 
 const TEXT = {
@@ -39,7 +39,7 @@ export const AuthPage: React.FC = () => {
         </div>
 
         <div className="mt-8">
-          <SimulatedLogin />
+          <Login />
         </div>
 
         <div className="pt-6 border-t border-zinc-100 text-center">

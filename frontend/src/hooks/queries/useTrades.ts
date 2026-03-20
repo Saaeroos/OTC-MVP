@@ -14,7 +14,7 @@ export const useTrades = () => {
   const createTradeMutation = useMutation({
     mutationFn: tradeService.createTrade,
     onMutate: async (newTradeData: TradeCreate) => {
-      // Cancel outgoing refetches (so they don't overwrite our optimistic update)
+      // Cancel outgoing refetches (so they don't overwrite optimistic update)
       await queryClient.cancelQueries({ queryKey: ['trades'] });
 
       const previousTrades = queryClient.getQueryData<Trade[]>(['trades']);

@@ -8,7 +8,7 @@ const TEXT = {
   LOADING: 'Loading roles...',
 };
 
-export const SimulatedLogin: React.FC = () => {
+export const Login: React.FC = () => {
   const { users, isLoadingUsers, login, isLoggingIn } = useAuth();
 
   const handleUserChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
