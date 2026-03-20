@@ -2,6 +2,14 @@
 
 This is the FastAPI backend for the OTC Trade Flow Application, providing core services for trade capture, automatic ID generation, and manager approval.
 
+## Tech Stack
+- **Python 3.11+**
+- **FastAPI** for the REST API
+- **SQLAlchemy & asyncpg** for async database interactions
+- **PostgreSQL** for data persistence
+- **Pydantic** for data validation
+- **Pytest** for unit testing
+
 ## Quick Start (Local Development)
 
 ### **Prerequisites**
