@@ -1,5 +1,9 @@
 # OTC Trade Flow MVP
 
+https://github.com/user-attachments/assets/6565ee89-3193-499e-808d-21794d23a0d6
+
+
+
 A full-stack application  to capture and manage  (OTC) energy trades across multiple divisions.
 
 ## Architecture
