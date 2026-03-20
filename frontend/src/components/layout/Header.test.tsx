@@ -20,7 +20,7 @@ describe('Header', () => {
     render(
       <MemoryRouter>
         <Header />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   };
 
@@ -29,7 +29,7 @@ describe('Header', () => {
       user: null,
       isAuthenticated: false,
       logout: mockLogout,
-    } as any);
+    } as unknown as ReturnType<typeof useAuthStore>);
 
     renderHeader();
     expect(screen.getByText('OTC Flow')).toBeInTheDocument();
@@ -40,7 +40,7 @@ describe('Header', () => {
       user: null,
       isAuthenticated: false,
       logout: mockLogout,
-    } as any);
+    } as unknown as ReturnType<typeof useAuthStore>);
 
     renderHeader();
     expect(screen.queryByTitle('Logout')).not.toBeInTheDocument();
@@ -51,7 +51,7 @@ describe('Header', () => {
       user: { name: 'John Doe', role: 'trader' },
       isAuthenticated: true,
       logout: mockLogout,
-    } as any);
+    } as unknown as ReturnType<typeof useAuthStore>);
 
     renderHeader();
     expect(screen.getByText('John Doe')).toBeInTheDocument();
@@ -64,7 +64,7 @@ describe('Header', () => {
       user: { name: 'Jane Manager', role: 'manager' },
       isAuthenticated: true,
       logout: mockLogout,
-    } as any);
+    } as unknown as ReturnType<typeof useAuthStore>);
 
     renderHeader();
     expect(screen.getByText('Jane Manager')).toBeInTheDocument();
@@ -76,13 +76,13 @@ describe('Header', () => {
       user: { name: 'John Doe', role: 'trader' },
       isAuthenticated: true,
       logout: mockLogout,
-    } as any);
+    } as unknown as ReturnType<typeof useAuthStore>);
 
     renderHeader();
-    
+
     const logoutBtn = screen.getByTitle('Logout');
     fireEvent.click(logoutBtn);
-    
+
     expect(mockLogout).toHaveBeenCalledTimes(1);
   });
 });

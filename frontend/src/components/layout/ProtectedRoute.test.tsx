@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { MemoryRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
 import { useAuthStore } from '../../stores/authStore';
 
@@ -23,26 +23,26 @@ describe('ProtectedRoute', () => {
       <MemoryRouter initialEntries={[initialRoute]}>
         <Routes>
           <Route path="/auth" element={<AuthPageMock />} />
-          <Route 
-            path="/protected" 
+          <Route
+            path="/protected"
             element={
               <ProtectedRoute>
                 <ProtectedContent />
               </ProtectedRoute>
-            } 
+            }
           />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   };
 
   it('renders children when the user is authenticated', () => {
     vi.mocked(useAuthStore).mockReturnValue({
       isAuthenticated: true,
-    } as any);
+    } as unknown as ReturnType<typeof useAuthStore>);
 
     renderWithRouter();
-    
+
     expect(screen.getByText('Protected Content')).toBeInTheDocument();
     expect(screen.queryByText('Auth Page Content')).not.toBeInTheDocument();
   });
@@ -50,10 +50,10 @@ describe('ProtectedRoute', () => {
   it('redirects to /auth when the user is not authenticated', () => {
     vi.mocked(useAuthStore).mockReturnValue({
       isAuthenticated: false,
-    } as any);
+    } as unknown as ReturnType<typeof useAuthStore>);
 
     renderWithRouter();
-    
+
     expect(screen.queryByText('Protected Content')).not.toBeInTheDocument();
     expect(screen.getByText('Auth Page Content')).toBeInTheDocument();
   });

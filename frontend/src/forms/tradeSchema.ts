@@ -8,7 +8,7 @@ const ERROR_TEXT = {
   QUANTITY: 'Quantity must be positive',
   PRICE: 'Price must be positive',
   DELIVERY_DATE: 'Delivery Date must be in the future',
-}
+};
 
 export const tradeSchema = z.object({
   seller: z.string().min(1, ERROR_TEXT.SELLER),
