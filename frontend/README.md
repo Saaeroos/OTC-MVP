@@ -1,57 +1,64 @@
-# React + TypeScript + Vite
+# OTC Trade Flow - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the React frontend for the OTC (Over-The-Counter) Trade Flow Application. It provides a user interface for traders to capture trades and for managers to review and approve them.
 
-Currently, two official plugins are available:
+## Tech Stack
+- **React 18** (with Vite)
+- **TypeScript** for static typing
+- **Tailwind CSS** for styling (with `clsx` and `tailwind-merge`)
+- **TanStack React Query** for server state management
+- **Zustand** for global client state management
+- **React Hook Form & Zod** for form validation
+- **Playwright** for E2E testing
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Quick Start (Local Development)
 
-## Expanding the ESLint configuration
+### **Prerequisites**
+- Node.js 18+
+- npm or pnpm
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### **Setup**
+1. **Navigate to the frontend directory**:
+   ```bash
+   cd otc-flow/frontend
+   ```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+   The application will be available at `http://localhost:5173`.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+## Available Scripts
+
+- `npm run dev` - Starts the development server.
+- `npm run build` - Builds the application for production.
+- `npm run preview` - Previews the production build locally.
+- `npm run lint` - Runs ESLint to check for code quality issues.
+- `npm run format` - Formats code using Prettier.
+- `npm run test` - Runs unit tests using Vitest.
+- `npm run test:e2e` - Runs end-to-end tests using Playwright.
+- `npm run test:e2e:ui` - Opens the Playwright UI mode for interactive E2E testing.
+
+## Project Structure
+
+```text
+src/
+├── api/          # Axios client setup and API service wrappers
+├── components/   # UI components following Atomic Design (atoms, molecules, organisms, layout)
+├── forms/        # Zod validation schemas
+├── hooks/        # Custom React hooks (e.g., React Query hooks)
+├── pages/        # Route-level page components
+├── stores/       # Zustand global state stores
+└── utils/        # Utility functions (e.g., Tailwind class merging)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
-
-export default tseslint.config({
-  extends: [
-    // other configs...
-    // Enable lint rules for React
-    reactX.configs['recommended-typescript'],
-    // Enable lint rules for React DOM
-    reactDom.configs.recommended,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+- **Role-Based Views**: UI adapts based on whether the logged-in user is a `trader` or a `manager`.
+- **Trade Capture Form**: Robust form with real-time validation and automatic whitespace sanitization.
+- **Data Table**: Paginated list of trades fetched from the backend.
+- **Accessibility**: Keyboard navigable interfaces, focus trapping in modals, and semantic HTML.
