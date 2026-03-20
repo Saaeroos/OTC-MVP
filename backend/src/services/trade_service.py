@@ -29,13 +29,46 @@ async def create_trade(db: AsyncSession, trade_in: schemas.TradeCreate, user_id:
     result = await db.execute(query)
     return result.scalar_one()
 
-async def get_trades(db: AsyncSession, skip: int = 0, limit: int = 100):
-    query = select(models.Trade).options(selectinload(models.Trade.division)).order_by(models.Trade.created_at.desc()).offset(skip).limit(limit)
+async def get_trades(db: AsyncSession, user: models.User, page: int = 1, size: int = 10):
+    skip = (page - 1) * size
+    
+    # Base query for counting
+    count_query = select(func.count()).select_from(models.Trade)
+    
+    # Base query for items
+    query = select(models.Trade).options(selectinload(models.Trade.division))
+    
+    if user.role == "trader":
+        count_query = count_query.where(models.Trade.created_by == user.id)
+        query = query.where(models.Trade.created_by == user.id)
+        
+    query = query.order_by(models.Trade.created_at.desc()).offset(skip).limit(size)
+    
+    # Execute count
+    count_result = await db.execute(count_query)
+    total = count_result.scalar()
+    
+    # Execute fetch
     result = await db.execute(query)
-    return result.scalars().all()
+    items = result.scalars().all()
+    
+    # Calculate total pages
+    pages = (total + size - 1) // size if total > 0 else 1
+    
+    return {
+        "items": items,
+        "total": total,
+        "page": page,
+        "size": size,
+        "pages": pages
+    }
 
-async def get_trade(db: AsyncSession, trade_id: UUID):
+async def get_trade(db: AsyncSession, trade_id: UUID, user: models.User = None):
     query = select(models.Trade).options(selectinload(models.Trade.division)).where(models.Trade.id == trade_id)
+    
+    if user and user.role == "trader":
+        query = query.where(models.Trade.created_by == user.id)
+        
     result = await db.execute(query)
     return result.scalar_one_or_none()
 

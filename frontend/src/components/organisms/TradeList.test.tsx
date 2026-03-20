@@ -19,6 +19,7 @@ describe('TradeList Organism', () => {
   it('renders loading state', () => {
     vi.mocked(useTrades).mockReturnValue({
       trades: [],
+      pagination: { total: 0, page: 1, size: 10, pages: 1 },
       isLoading: true,
     } as unknown as ReturnType<typeof useTrades>);
     vi.mocked(useAuthStore).mockReturnValue(null as unknown as ReturnType<typeof useAuthStore>);
@@ -35,6 +36,7 @@ describe('TradeList Organism', () => {
   it('renders empty state when no trades', () => {
     vi.mocked(useTrades).mockReturnValue({
       trades: [],
+      pagination: { total: 0, page: 1, size: 10, pages: 1 },
       isLoading: false,
     } as unknown as ReturnType<typeof useTrades>);
     vi.mocked(useAuthStore).mockReturnValue(null as unknown as ReturnType<typeof useAuthStore>);
@@ -66,6 +68,7 @@ describe('TradeList Organism', () => {
 
     vi.mocked(useTrades).mockReturnValue({
       trades: mockTrades,
+      pagination: { total: 1, page: 1, size: 10, pages: 1 },
       isLoading: false,
       approveTrade: vi.fn(),
       isApproving: false,

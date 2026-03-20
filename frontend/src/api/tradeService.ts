@@ -1,9 +1,9 @@
 import apiClient from './client';
-import { Trade, TradeCreate, Division } from '../types';
+import { Trade, TradeCreate, Division, PaginatedTrades } from '../types';
 
 export const tradeService = {
-  getTrades: async () => {
-    const { data } = await apiClient.get<Trade[]>('/api/trades');
+  getTrades: async (page: number = 1, size: number = 10) => {
+    const { data } = await apiClient.get<PaginatedTrades>(`/api/trades?page=${page}&size=${size}`);
     return data;
   },
 

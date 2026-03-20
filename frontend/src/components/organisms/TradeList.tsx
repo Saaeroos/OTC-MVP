@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTrades } from '../../hooks/queries/useTrades';
 import { useAuthStore } from '../../stores/authStore';
 import { CheckCircle2, Clock, Filter, Search } from 'lucide-react';
 import { clsx } from 'clsx';
 import { Button } from '../atoms';
+import { Pagination } from '../molecules';
 
 const TEXT = {
   TITLE: 'Trade Dashboard',
@@ -24,11 +25,17 @@ const TEXT = {
     PENDING: 'Pending',
   },
   APPROVE_BUTTON: 'Approve',
+  PREVIOUS: 'Previous',
+  NEXT: 'Next',
 };
 
 export const TradeList: React.FC = () => {
+  const [page, setPage] = useState(1);
   const user = useAuthStore((state) => state.user);
-  const { trades, isLoading, approveTrade, isApproving, approvingId } = useTrades();
+  const { trades, pagination, isLoading, approveTrade, isApproving, approvingId } = useTrades(
+    page,
+    10,
+  );
 
   if (isLoading) return <div className="p-8 text-center text-zinc-500">{TEXT.LOADING}</div>;
 
@@ -157,6 +164,16 @@ export const TradeList: React.FC = () => {
           </tbody>
         </table>
       </div>
+
+      {pagination && (
+        <Pagination
+          page={pagination.page}
+          pages={pagination.pages}
+          total={pagination.total}
+          size={pagination.size}
+          onPageChange={setPage}
+        />
+      )}
     </div>
   );
 };
