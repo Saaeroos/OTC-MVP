@@ -1,14 +1,17 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { tradeService } from '../../api/tradeService';
 import { Trade, TradeCreate } from '../../types';
+import { useAuthStore } from '../../stores/authStore';
 
 export const useTrades = () => {
   const queryClient = useQueryClient();
+  const { user } = useAuthStore();
 
   const tradesQuery = useQuery({
     queryKey: ['trades'],
     queryFn: tradeService.getTrades,
-    staleTime: 1000 * 15, // 15 seconds
+    staleTime: 1000 * 10, // 10 seconds
+    refetchInterval: user?.role === 'manager' ? 1000 * 10 : false,
   });
 
   const createTradeMutation = useMutation({
