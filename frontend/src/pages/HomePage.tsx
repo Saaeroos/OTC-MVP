@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
+import { ShieldCheck, Plus } from 'lucide-react';
 import { useAuthStore } from '../stores/authStore';
 import { TradeCaptureForm, TradeList } from '../components/organisms';
-import { ShieldCheck, Plus } from 'lucide-react';
 import { Button } from '../components/atoms';
 import { Modal } from '../components/molecules';
 
 const TEXT = {
-  TITLE: 'Trade Console',
-  SUBTITLE: 'Manage and monitor your energy trades in real-time.',
   CREATE_BUTTON: 'Capture New Trade',
   MODAL_TITLE: 'Capture New Energy Trade',
 };
@@ -19,11 +17,6 @@ export const HomePage: React.FC = () => {
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white p-8 rounded-2xl border border-zinc-200 shadow-sm">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-black text-zinc-900 tracking-tight">{TEXT.TITLE}</h1>
-          <p className="text-zinc-500 font-medium">{TEXT.SUBTITLE}</p>
-        </div>
-
         {user?.role === 'trader' && (
           <Button
             onClick={() => setIsModalOpen(true)}
