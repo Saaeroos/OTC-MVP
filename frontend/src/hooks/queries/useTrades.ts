@@ -1,11 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { tradeService } from '../../api/tradeService';
 import { Trade, TradeCreate } from '../../types';
-import { useAuthStore } from '../../stores/authStore';
 
 export const useTrades = () => {
   const queryClient = useQueryClient();
-  const { user } = useAuthStore();
 
   const tradesQuery = useQuery({
     queryKey: ['trades'],

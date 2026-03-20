@@ -51,26 +51,36 @@ async def lifespan(app: FastAPI):
             ])
             await session.commit()
 
-        # Check if users exist
-        user_result = await session.execute(select(User).limit(1))
-        if not user_result.scalar():
-            session.add_all([
-                User(
-                    username='john_trader', 
-                    email='john@example.com', 
-                    password_hash='$2b$12$EixZaYVK1fsbw1ZfbX3OXePaGuNoG.U.E/k5U/5L/m2L6G.L.G.L.', 
-                    role='trader', 
-                    name='John Doe'
-                ),
-                User(
-                    username='sarah_manager', 
-                    email='sarah@example.com', 
-                    password_hash='$2b$12$EixZaYVK1fsbw1ZfbX3OXePaGuNoG.U.E/k5U/5L/m2L6G.L.G.L.', 
-                    role='manager', 
-                    name='Sarah Manager'
-                )
-            ])
-            await session.commit()
+        # Ensure default users exist
+        default_users = [
+            User(
+                username='mo_alhayek', 
+                email='mo@example.com', 
+                password_hash='$2b$12$EixZaYVK1fsbw1ZfbX3OXePaGuNoG.U.E/k5U/5L/m2L6G.L.G.L.', 
+                role='trader', 
+                name='Mo Alhayek'
+            ),
+            User(
+                username='mo_money', 
+                email='momoney@example.com', 
+                password_hash='$2b$12$EixZaYVK1fsbw1ZfbX3OXePaGuNoG.U.E/k5U/5L/m2L6G.L.G.L.', 
+                role='trader', 
+                name='Mo Money'
+            ),
+            User(
+                username='sarah_manager', 
+                email='sarah@example.com', 
+                password_hash='$2b$12$EixZaYVK1fsbw1ZfbX3OXePaGuNoG.U.E/k5U/5L/m2L6G.L.G.L.', 
+                role='manager', 
+                name='Sarah Manager'
+            )
+        ]
+        
+        for u in default_users:
+            user_result = await session.execute(select(User).where(User.username == u.username))
+            if not user_result.scalar():
+                session.add(u)
+        await session.commit()
         
     yield
 
