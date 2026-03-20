@@ -11,7 +11,6 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const location = useLocation();
 
   if (!isAuthenticated) {
-    // Redirect to auth page if not authenticated
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 

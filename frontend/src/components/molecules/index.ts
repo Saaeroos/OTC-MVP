@@ -1,2 +1,2 @@
-export * from './Modal';
-export * from './SimulatedLogin';
+export { Modal } from './Modal';
+export { Login } from './Login';

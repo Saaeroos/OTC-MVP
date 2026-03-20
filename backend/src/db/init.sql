@@ -62,33 +62,35 @@ CREATE INDEX IF NOT EXISTS idx_trades_created_by ON trades(created_by);
 CREATE INDEX IF NOT EXISTS idx_trades_deal_date ON trades(deal_date);
 CREATE INDEX IF NOT EXISTS idx_trade_approvals_trade_id ON trade_approvals(trade_id);
 
+-- Table to track daily sequences safely
+CREATE TABLE IF NOT EXISTS daily_trade_sequences (
+    deal_date DATE PRIMARY KEY,
+    last_sequence INTEGER NOT NULL DEFAULT 0
+);
+
 -- Function to generate next trade ID
 CREATE OR REPLACE FUNCTION generate_trade_id(div_id UUID)
 RETURNS TEXT AS $$
 DECLARE
     current_date_str TEXT;
     div_identifier INTEGER;
-    next_sequence INTEGER;
+    next_seq INTEGER;
     new_trade_id TEXT;
 BEGIN
     current_date_str := TO_CHAR(CURRENT_DATE, 'DD.MM.YYYY');
     
     -- Get division identifier
-    SELECT identifier INTO div_identifier FROM divisions WHERE id = div_id;
+    SELECT identifier INTO STRICT div_identifier FROM divisions WHERE id = div_id;
     
-    -- Get next sequence number for this division and date
-    -- Sequence is per day across all divisions? 
-    -- User Story says: "X is the serial count of trades" 
-    -- Usually this means total trades for that day.
-    -- Example IDs: 01.01.2023-000001.1, 01.01.2023-000002.1
-    -- Let's count trades for today.
-    
-    SELECT COUNT(*) + 1 INTO next_sequence
-    FROM trades 
-    WHERE deal_date = CURRENT_DATE;
+    -- Thread-safe sequence generation
+    INSERT INTO daily_trade_sequences (deal_date, last_sequence)
+    VALUES (CURRENT_DATE, 1)
+    ON CONFLICT (deal_date) DO UPDATE 
+    SET last_sequence = daily_trade_sequences.last_sequence + 1
+    RETURNING last_sequence INTO next_seq;
     
     -- Format sequence with leading zeros (6 digits as per example 000001)
-    new_trade_id := current_date_str || '-' || LPAD(next_sequence::TEXT, 6, '0') || '.' || div_identifier;
+    new_trade_id := current_date_str || '-' || LPAD(next_seq::TEXT, 6, '0') || '.' || div_identifier;
     
     RETURN new_trade_id;
 END;

@@ -52,7 +52,7 @@ describe('TradeList Organism', () => {
     const mockTrades = [
       {
         id: '1',
-        trade_id: 'TRD-001',
+        trade_id: '19.03.2026-000001.1',
         product: 'Energy',
         seller: 'Seller A',
         buyer: 'Buyer B',
@@ -80,7 +80,7 @@ describe('TradeList Organism', () => {
       </QueryClientProvider>,
     );
 
-    expect(screen.getByText('TRD-001')).toBeInTheDocument();
+    expect(screen.getByText('19.03.2026-000001.1')).toBeInTheDocument();
     expect(screen.getByText('Seller A')).toBeInTheDocument();
     expect(screen.getByText('Buyer B')).toBeInTheDocument();
   });

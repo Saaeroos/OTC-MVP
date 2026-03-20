@@ -1,2 +1,2 @@
-export * from './Button';
-export { default as Empty } from './Empty';
+export { Button } from './Button';
+export { Empty } from './Empty';

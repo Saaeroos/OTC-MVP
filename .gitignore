@@ -36,6 +36,8 @@ ENV/
 playwright-report/
 test-results/
 coverage/
+.pytest_cache/
+.pytest-cache/
 
 # OS/IDE
 .DS_Store
