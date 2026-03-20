@@ -226,6 +226,7 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
                 <input
                   id="delivery_date"
                   type="date"
+                  lang="en-GB"
                   {...register('delivery_date')}
                   className="w-full pl-9 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1"
                 />

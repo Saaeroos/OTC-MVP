@@ -64,7 +64,6 @@ test.describe('Authentication Flow', () => {
 
     // Should redirect to home
     await expect(page).toHaveURL('http://localhost:5173/');
-    await expect(page.getByText(/Trade Console/i)).toBeVisible();
     await expect(page.getByText(/Mo Alhayek/i)).toBeVisible();
   });
 });

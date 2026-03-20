@@ -101,3 +101,10 @@ class TradeApproval(BaseModel):
     model_config = {
         "from_attributes": True
     }
+
+class PaginatedTrades(BaseModel):
+    items: List[Trade]
+    total: int
+    page: int
+    size: int
+    pages: int

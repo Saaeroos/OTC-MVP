@@ -48,6 +48,14 @@ export interface TradeCreate {
   currency?: string;
 }
 
+export interface PaginatedTrades {
+  items: Trade[];
+  total: number;
+  page: number;
+  size: number;
+  pages: number;
+}
+
 export interface AuthResponse {
   access_token: string;
   token_type: string;

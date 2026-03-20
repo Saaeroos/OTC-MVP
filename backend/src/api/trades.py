@@ -19,14 +19,14 @@ async def create_trade(
         raise HTTPException(status_code=403, detail="Only traders can create trades")
     return await trade_service.create_trade(db, trade, current_user.id)
 
-@router.get("", response_model=List[schemas.Trade])
+@router.get("", response_model=schemas.PaginatedTrades)
 async def read_trades(
-    skip: int = 0,
-    limit: int = 100,
+    page: int = 1,
+    size: int = 10,
     db: AsyncSession = Depends(get_db),
     current_user: models.User = Depends(get_current_user)
 ):
-    return await trade_service.get_trades(db, skip=skip, limit=limit)
+    return await trade_service.get_trades(db, user=current_user, page=page, size=size)
 
 @router.get("/{trade_id}", response_model=schemas.Trade)
 async def read_trade(
@@ -34,7 +34,7 @@ async def read_trade(
     db: AsyncSession = Depends(get_db),
     current_user: models.User = Depends(get_current_user)
 ):
-    db_trade = await trade_service.get_trade(db, trade_id)
+    db_trade = await trade_service.get_trade(db, trade_id, user=current_user)
     if db_trade is None:
         raise HTTPException(status_code=404, detail="Trade not found")
     return db_trade

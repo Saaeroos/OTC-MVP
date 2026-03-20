@@ -1,13 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { tradeService } from '../../api/tradeService';
-import { Trade, TradeCreate } from '../../types';
+import { Trade, TradeCreate, PaginatedTrades } from '../../types';
 
-export const useTrades = () => {
+export const useTrades = (page: number = 1, size: number = 10) => {
   const queryClient = useQueryClient();
 
   const tradesQuery = useQuery({
-    queryKey: ['trades'],
-    queryFn: tradeService.getTrades,
+    queryKey: ['trades', page, size],
+    queryFn: () => tradeService.getTrades(page, size),
     staleTime: 1000 * 10, // 10 seconds
     refetchInterval: 1000 * 10, // 10 seconds
   });
@@ -16,12 +16,12 @@ export const useTrades = () => {
     mutationFn: tradeService.createTrade,
     onMutate: async (newTradeData: TradeCreate) => {
       // Cancel outgoing refetches (so they don't overwrite optimistic update)
-      await queryClient.cancelQueries({ queryKey: ['trades'] });
+      await queryClient.cancelQueries({ queryKey: ['trades', page, size] });
 
-      const previousTrades = queryClient.getQueryData<Trade[]>(['trades']);
+      const previousData = queryClient.getQueryData<PaginatedTrades>(['trades', page, size]);
 
       // Optimistic update
-      if (previousTrades) {
+      if (previousData) {
         const optimisticTrade: Trade = {
           ...newTradeData,
           id: `temp-${Date.now()}`,
@@ -35,15 +35,18 @@ export const useTrades = () => {
           updated_at: new Date().toISOString(),
           division: undefined, // division data might be incomplete here
         };
-        queryClient.setQueryData(['trades'], [optimisticTrade, ...previousTrades]);
+        queryClient.setQueryData(['trades', page, size], {
+          ...previousData,
+          items: [optimisticTrade, ...previousData.items],
+        });
       }
 
-      return { previousTrades };
+      return { previousData };
     },
     onError: (err, newTrade, context) => {
       // Rollback on Error
-      if (context?.previousTrades) {
-        queryClient.setQueryData(['trades'], context.previousTrades);
+      if (context?.previousData) {
+        queryClient.setQueryData(['trades', page, size], context.previousData);
       }
     },
     onSettled: () => {
@@ -56,22 +59,25 @@ export const useTrades = () => {
   const approveTradeMutation = useMutation({
     mutationFn: tradeService.approveTrade,
     onMutate: async (tradeId: string) => {
-      await queryClient.cancelQueries({ queryKey: ['trades'] });
+      await queryClient.cancelQueries({ queryKey: ['trades', page, size] });
 
-      const previousTrades = queryClient.getQueryData<Trade[]>(['trades']);
+      const previousData = queryClient.getQueryData<PaginatedTrades>(['trades', page, size]);
 
-      if (previousTrades) {
-        const updatedTrades = previousTrades.map((trade) =>
+      if (previousData) {
+        const updatedTrades = previousData.items.map((trade) =>
           trade.id === tradeId ? { ...trade, status: 'approved' as const } : trade,
         );
-        queryClient.setQueryData(['trades'], updatedTrades);
+        queryClient.setQueryData(['trades', page, size], {
+          ...previousData,
+          items: updatedTrades,
+        });
       }
 
-      return { previousTrades };
+      return { previousData };
     },
     onError: (err, tradeId, context) => {
-      if (context?.previousTrades) {
-        queryClient.setQueryData(['trades'], context.previousTrades);
+      if (context?.previousData) {
+        queryClient.setQueryData(['trades', page, size], context.previousData);
       }
     },
     onSettled: () => {
@@ -80,7 +86,15 @@ export const useTrades = () => {
   });
 
   return {
-    trades: tradesQuery.data,
+    trades: tradesQuery.data?.items,
+    pagination: tradesQuery.data
+      ? {
+          total: tradesQuery.data.total,
+          page: tradesQuery.data.page,
+          size: tradesQuery.data.size,
+          pages: tradesQuery.data.pages,
+        }
+      : null,
     isLoading: tradesQuery.isLoading,
     isError: tradesQuery.isError,
     error: tradesQuery.error,

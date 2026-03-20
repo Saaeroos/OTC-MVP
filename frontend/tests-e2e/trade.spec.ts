@@ -68,7 +68,13 @@ test.describe('Trade Management Flow', () => {
         await route.fulfill({
           status: 200,
           contentType: 'application/json',
-          body: JSON.stringify(trades),
+          body: JSON.stringify({
+            items: trades,
+            total: trades.length,
+            page: 1,
+            size: 10,
+            pages: 1,
+          }),
         });
       }
     });
