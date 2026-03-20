@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useAuthStore } from '../stores/authStore';
 import { TradeCaptureForm, TradeList } from '../components/organisms';
 import { Button } from '../components/atoms';
