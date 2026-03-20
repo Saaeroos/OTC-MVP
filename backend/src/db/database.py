@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Use PostgreSQL as requested
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://otc_user:otc_pass@localhost:5432/otc_db")
 
 engine = create_async_engine(DATABASE_URL, echo=True)

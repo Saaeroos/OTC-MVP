@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, text
+from sqlalchemy import select, func
 from sqlalchemy.orm import selectinload
 from src.models import models, schemas
 from uuid import UUID
@@ -8,13 +8,13 @@ async def create_trade(db: AsyncSession, trade_in: schemas.TradeCreate, user_id:
     # Calculate total price
     total_price = trade_in.quantity * trade_in.price
     
-    # Generate Trade ID using DB function (PostgreSQL)
+    # Generate Trade ID using DB function
     query = select(func.generate_trade_id(trade_in.division_id))
     result = await db.execute(query)
     trade_id_str = result.scalar()
 
     new_trade = models.Trade(
-        **trade_in.dict(),
+        **trade_in.model_dump(),
         trade_id=trade_id_str,
         total_price=total_price,
         created_by=user_id,
@@ -31,7 +31,7 @@ async def create_trade(db: AsyncSession, trade_in: schemas.TradeCreate, user_id:
 
 async def get_trades(db: AsyncSession, user: models.User, page: int = 1, size: int = 10):
     skip = (page - 1) * size
-    
+
     # Base query for counting
     count_query = select(func.count()).select_from(models.Trade)
     
@@ -44,11 +44,11 @@ async def get_trades(db: AsyncSession, user: models.User, page: int = 1, size: i
         
     query = query.order_by(models.Trade.created_at.desc()).offset(skip).limit(size)
     
-    # Execute count
+    # Execute count query
     count_result = await db.execute(count_query)
     total = count_result.scalar()
     
-    # Execute fetch
+    # Execute fetch query
     result = await db.execute(query)
     items = result.scalars().all()
     
@@ -94,7 +94,7 @@ async def approve_trade(db: AsyncSession, trade_id: UUID, user_id: UUID):
     
     await db.commit()
     
-    # Re-fetch to ensure all relationships are loaded for response
+    # Re-fetch trade with division relationship to ensure all relationships are loaded for response
     query = select(models.Trade).where(models.Trade.id == trade.id).options(selectinload(models.Trade.division))
     result = await db.execute(query)
     return result.scalar_one()

@@ -1,7 +1,6 @@
-from sqlalchemy import Column, String, Integer, Float, Date, DateTime, ForeignKey, CheckConstraint, Numeric, text
+from sqlalchemy import Column, String, Integer, Date, DateTime, ForeignKey, CheckConstraint, Numeric, text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from datetime import datetime
 from src.db.database import Base
 
 class User(Base):
