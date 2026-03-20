@@ -53,7 +53,7 @@ This is the FastAPI backend for the OTC Trade Flow Application, providing core s
 - `src/api/`: Contains the FastAPI routers for different resources (auth, trades, divisions).
 - `src/services/`: Business logic layer (Trade creation, ID generation, Approval workflow).
 - `src/models/`: Data definitions (SQLAlchemy models and Pydantic schemas).
-- `src/db/`: Database configuration and initialization scripts (`init.sql`, `seed.sql`).
+- `src/db/`: Database configuration and initialization scripts (`init.sql`, `seed.example.sql`).
 
 ## Key Features
 

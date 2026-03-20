@@ -51,7 +51,10 @@ coverage/
 .env.test.local
 .env.production.local
 
+# Database Seeds
+seed.sql
+
+
 
 # IDE
 .trae
-.trae/documents/

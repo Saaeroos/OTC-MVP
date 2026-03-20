@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from src.api import auth, trades, divisions
@@ -51,38 +51,64 @@ async def lifespan(app: FastAPI):
             ])
             await session.commit()
 
-        # Check if users exist
-        user_result = await session.execute(select(User).limit(1))
-        if not user_result.scalar():
-            session.add_all([
-                User(
-                    username='john_trader', 
-                    email='john@example.com', 
-                    password_hash='$2b$12$EixZaYVK1fsbw1ZfbX3OXePaGuNoG.U.E/k5U/5L/m2L6G.L.G.L.', 
-                    role='trader', 
-                    name='John Doe'
-                ),
-                User(
-                    username='sarah_manager', 
-                    email='sarah@example.com', 
-                    password_hash='$2b$12$EixZaYVK1fsbw1ZfbX3OXePaGuNoG.U.E/k5U/5L/m2L6G.L.G.L.', 
-                    role='manager', 
-                    name='Sarah Manager'
-                )
-            ])
-            await session.commit()
+        # Ensure default users exist
+        default_users = [
+            User(
+                username='mo_alhayek', 
+                email='mo_alhayek@example.com', 
+                password_hash='$2b$12$EixZaYVK1fsbw1ZfbX3OXePaGuNoG.U.E/k5U/5L/m2L6G.L.G.L.', 
+                role='trader', 
+                name='Mo Alhayek'
+            ),
+            User(
+                username='mo_money', 
+                email='momoney@example.com', 
+                password_hash='$2b$12$EixZaYVK1fsbw1ZfbX3OXePaGuNoG.U.E/k5U/5L/m2L6G.L.G.L.', 
+                role='trader', 
+                name='Mo Money'
+            ),
+            User(
+                username='sarah_manager', 
+                email='sarah@example.com', 
+                password_hash='$2b$12$EixZaYVK1fsbw1ZfbX3OXePaGuNoG.U.E/k5U/5L/m2L6G.L.G.L.', 
+                role='manager', 
+                name='Sarah Manager'
+            )
+        ]
+        
+        for u in default_users:
+            user_result = await session.execute(select(User).where(User.username == u.username))
+            if not user_result.scalar():
+                session.add(u)
+        await session.commit()
         
     yield
 
 app = FastAPI(title="OTC Trade Flow API", lifespan=lifespan)
 
+# Get allowed origins from environment variable, or use defaults for local development
+ALLOWED_ORIGINS = os.getenv(
+    "ALLOWED_ORIGINS", 
+    "http://localhost:3000,http://localhost:5173"
+).split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # For development; restrict in production
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    if os.getenv("ENVIRONMENT") == "production":
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    return response
 
 app.include_router(auth.router)
 app.include_router(trades.router)

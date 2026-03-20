@@ -8,7 +8,8 @@ export const useTrades = () => {
   const tradesQuery = useQuery({
     queryKey: ['trades'],
     queryFn: tradeService.getTrades,
-    staleTime: 1000 * 15, // 15 seconds
+    staleTime: 1000 * 10, // 10 seconds
+    refetchInterval: 1000 * 10, // 10 seconds
   });
 
   const createTradeMutation = useMutation({

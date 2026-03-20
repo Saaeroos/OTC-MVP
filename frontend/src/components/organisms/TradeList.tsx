@@ -40,11 +40,15 @@ export const TradeList: React.FC = () => {
           <div className="relative">
             <Search className="absolute left-3 top-2.5 w-4 h-4 text-zinc-400" />
             <input
-              className="pl-9 pr-4 py-2 bg-white border border-zinc-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900"
+              className="pl-9 pr-4 py-2 bg-white border border-zinc-200 rounded-lg text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1"
               placeholder={TEXT.SEARCH_PLACEHOLDER}
+              aria-label={TEXT.SEARCH_PLACEHOLDER}
             />
           </div>
-          <button className="p-2 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50">
+          <button
+            className="p-2 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1"
+            aria-label="Filter trades"
+          >
             <Filter className="w-4 h-4 text-zinc-600" />
           </button>
         </div>

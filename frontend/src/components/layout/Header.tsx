@@ -41,6 +41,7 @@ export function Header() {
                   variant="ghost"
                   size="icon"
                   title={TEXT.LOGOUT_TITLE}
+                  aria-label={TEXT.LOGOUT_TITLE}
                   onClick={logout}
                   className="text-zinc-400 hover:text-red-500 hover:bg-red-50"
                 >

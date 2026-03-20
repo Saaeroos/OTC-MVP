@@ -103,7 +103,7 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
                 <input
                   id="seller"
                   {...register('seller')}
-                  className="w-full pl-9 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:outline-none"
+                  className="w-full pl-9 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1"
                   placeholder={TEXT.PLACEHOLDERS.SELLER}
                 />
               </div>
@@ -120,7 +120,7 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
                 <input
                   id="buyer"
                   {...register('buyer')}
-                  className="w-full pl-9 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:outline-none"
+                  className="w-full pl-9 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1"
                   placeholder={TEXT.PLACEHOLDERS.BUYER}
                 />
               </div>
@@ -142,7 +142,7 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
                 <input
                   id="product"
                   {...register('product')}
-                  className="w-full pl-9 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:outline-none"
+                  className="w-full pl-9 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1"
                   placeholder={TEXT.PLACEHOLDERS.PRODUCT}
                 />
               </div>
@@ -157,7 +157,7 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
               <select
                 id="division_id"
                 {...register('division_id')}
-                className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:outline-none"
+                className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1"
               >
                 <option value="">{TEXT.PLACEHOLDERS.DIVISION}</option>
                 {divisions?.map((div) => (
@@ -188,7 +188,7 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
                   step="0.01"
                   min="0"
                   {...register('quantity', { valueAsNumber: true })}
-                  className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:outline-none"
+                  className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1"
                 />
                 {errors.quantity && (
                   <p className="mt-1 text-xs text-red-500">{errors.quantity.message}</p>
@@ -206,7 +206,7 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
                     step="0.01"
                     min="0"
                     {...register('price', { valueAsNumber: true })}
-                    className="w-full pl-9 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:outline-none"
+                    className="w-full pl-9 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1"
                   />
                 </div>
                 {errors.price && (
@@ -227,7 +227,7 @@ export const TradeCaptureForm: React.FC<TradeCaptureFormProps> = ({ onSuccess })
                   id="delivery_date"
                   type="date"
                   {...register('delivery_date')}
-                  className="w-full pl-9 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-900 focus:outline-none"
+                  className="w-full pl-9 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1"
                 />
               </div>
               {errors.delivery_date && (
