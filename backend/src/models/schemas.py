@@ -5,10 +5,14 @@ from uuid import UUID
 from decimal import Decimal
 
 class UserBase(BaseModel):
-    username: str
+    username: str = Field(..., min_length=1)
     email: EmailStr
-    role: str
-    name: str
+    role: str = Field(..., min_length=1)
+    name: str = Field(..., min_length=1)
+
+    model_config = {
+        "str_strip_whitespace": True
+    }
 
 class UserCreate(UserBase):
     password: str
@@ -30,8 +34,12 @@ class LoginSimulated(BaseModel):
     username: str
 
 class DivisionBase(BaseModel):
-    name: str
+    name: str = Field(..., min_length=1)
     identifier: int
+
+    model_config = {
+        "str_strip_whitespace": True
+    }
 
 class Division(DivisionBase):
     id: UUID
@@ -41,14 +49,18 @@ class Division(DivisionBase):
     }
 
 class TradeBase(BaseModel):
-    seller: str
-    buyer: str
-    product: str
+    seller: str = Field(..., min_length=1)
+    buyer: str = Field(..., min_length=1)
+    product: str = Field(..., min_length=1)
     division_id: UUID
     quantity: Decimal = Field(gt=0)
     delivery_date: date
     price: Decimal = Field(gt=0)
-    currency: str = "EUR"
+    currency: str = Field(default="EUR", min_length=1)
+
+    model_config = {
+        "str_strip_whitespace": True
+    }
 
     @field_validator('delivery_date')
     @classmethod

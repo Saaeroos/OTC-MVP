@@ -11,9 +11,9 @@ const ERROR_TEXT = {
 };
 
 export const tradeSchema = z.object({
-  seller: z.string().min(1, ERROR_TEXT.SELLER),
-  buyer: z.string().min(1, ERROR_TEXT.BUYER),
-  product: z.string().min(1, ERROR_TEXT.PRODUCT),
+  seller: z.string().trim().min(1, ERROR_TEXT.SELLER),
+  buyer: z.string().trim().min(1, ERROR_TEXT.BUYER),
+  product: z.string().trim().min(1, ERROR_TEXT.PRODUCT),
   division_id: z.string().uuid(ERROR_TEXT.DIVISION_ID),
   quantity: z.number().positive(ERROR_TEXT.QUANTITY),
   price: z.number().positive(ERROR_TEXT.PRICE),
